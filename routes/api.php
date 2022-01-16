@@ -6,6 +6,7 @@ use App\Http\Controllers\ChoiceController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,18 @@ use App\Http\Controllers\UserController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+//Auth routes
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+
+], function ($router) {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::get('/user-profile', [AuthController::class, 'userProfile']);    
+});
 
 //User routes
 Route::get('/users' , [UserController::class]);
