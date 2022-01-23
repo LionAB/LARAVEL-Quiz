@@ -92,18 +92,8 @@ class QuestionController extends Controller
     }
     public function question_list($quiz_id)
     {
-      
-        $quiz = Quiz ::findOrFail($quiz_id);
-        $question=Question::all();
-        $question->quiz_id=$quiz->id;
-     
-
-
-        
-       
-        
-    
-        return response(['message'=>$question->quiz_id],200);
+        $question= Question::where('quiz_id',$quiz_id)->get();
+        return response(['questions'=>$question],200);
 
     }
 }

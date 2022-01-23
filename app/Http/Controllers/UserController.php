@@ -31,7 +31,10 @@ class UserController extends Controller
         
     }
   
-
+    public function profile($id){
+        $user= User::where('id',$id)->get();
+        return response(['utilisateur'=>$user],200);
+    }
 
 
 

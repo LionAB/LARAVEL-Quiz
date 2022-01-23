@@ -54,41 +54,42 @@ class ChoiceController extends Controller
     {
         return Choice::find($id);
     }
-    public function choice_list($question_id,$choice_id)
+    public function choice_list($question_id)
     {
-        $question = Question ::findOrFail($question_id);
-        $choice_list =$question-> choice_list;
-        $choice_list->question_id= $question_id;
-        $choice_list->choice->add(Choice::findOrFail($choice_id));
-        $choice_list->save();
-        return response(200);
+
+        $choice = Choice::where('question_id',$question_id)->get();
+
+        return response(['choix'=>$choice],200);
     }
 
-    public function answer_question($question_id,$choice_id,$user_id)
+    public function answer_question($user_id,$question_id,$choice_id)
     {
-        $points = Score::findOrFail($user_id);
+        $points = Score::find($user_id);
         $question = Question ::findOrFail($question_id);
-        $choice = Choice ::findOrFail($choice_id);
+        //$choice = Choice ::findOrFail($choice_id);
         $answer=$question->answer;
         $earning=$question->earning; 
         $score=$points->score;
-        echo $earning;
+        
         
         
         if ($answer == $choice_id)
         {
-            $points->increment('score',+$earning);
-        
+    
+           $points->increment('score',$earning);
+          
             $points->save();
             return response(['message' => 'Bonne réponse votre score est: '
-                                        .$score], 200);
+                                        .$points->score], 200);
+                                        echo $points;
             
         }else{
         
+            
             return response(['message' => 'Mauvaise réponse',$score], 200);
         }
         
-
+        $points->save();
 
     }
 

@@ -89,22 +89,39 @@ class QuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $quiz_id)
     {
-        $quiz = Quiz::findOrFail($id);
+
+        $quiz = Quiz::findOrFail($quiz_id);
         $quiz->update($request->all());
         return response()->json($quiz, 200);
     }
 
+    public function publish($quiz_id){
+        $quiz = Quiz ::findOrFail($quiz_id);
+        $quiz -> update(['published'=>1]);
+        return response(['message' => 'Quiz Successfully published'], 200);
+    }
+    public function unpublish($quiz_id){
+        $quiz = Quiz ::findOrFail($quiz_id);
+        $quiz -> update(['published'=>0]);
+        return response(['message' => 'Quiz unpblishde'], 200);;
+    }
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($quiz_id){
+        $quiz= Quiz::findOrFail($quiz_id);
+        $quiz->delete();
+        return response(['message' => 'Quiz deleted Successfully'], 200);
+    }
+    public function destroy($quiz_id)
     {
-        Quiz::findOrFail($id)->delete();
+        $quiz= Quiz::findOrFail($quiz_id);
+        $quiz->delete();
         return response(['message' => 'Deleted Successfully'], 200);
     }
 }

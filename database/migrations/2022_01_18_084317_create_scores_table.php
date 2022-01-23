@@ -17,7 +17,7 @@ class CreateScoresTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('quiz_id')->nullable();
-            $table->double('score')->nullable();
+            $table->double('score')->default(0);
             $table->timestamps();
             
         });

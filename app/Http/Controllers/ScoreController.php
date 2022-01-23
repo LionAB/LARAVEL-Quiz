@@ -20,6 +20,7 @@ class ScoreController extends Controller
     public function index()
     {
         //
+        return Score::all();
     }
 
     /**
