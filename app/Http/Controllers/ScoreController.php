@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+
+use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Quiz;
 use App\Models\Question;
 use App\Models\Choice;
 use App\Models\Score;
 
-use Illuminate\Http\Request;
-
-class QuizController extends Controller
+class ScoreController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class QuizController extends Controller
      */
     public function index()
     {
-        return Quiz::all();
+        //
     }
 
     /**
@@ -29,23 +29,8 @@ class QuizController extends Controller
      */
     public function create()
     {
-        
+        //
     }
-
-    
-    public function choose_quiz($user_id,$quiz_id){
-        $user= User::findOrFail($user_id);
-         $score= new Score;
-        $score->user_id=$user->id;
-    
-        $quiz=Quiz::findOrFail($quiz_id);
-        $score->quiz_id=$quiz->id; 
-        
-        $score->save(); 
-        
-        return response(['message'=>$score],200);
-    }
-
 
     /**
      * Store a newly created resource in storage.
@@ -55,9 +40,7 @@ class QuizController extends Controller
      */
     public function store(Request $request)
     {
-        $quiz = Quiz::create($request->all());
-
-        return response()->json($quiz, 201);
+        //
     }
 
     /**
@@ -68,7 +51,7 @@ class QuizController extends Controller
      */
     public function show($id)
     {
-        return Quiz::find($id);
+        //
     }
 
     /**
@@ -91,9 +74,7 @@ class QuizController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $quiz = Quiz::findOrFail($id);
-        $quiz->update($request->all());
-        return response()->json($quiz, 200);
+        //
     }
 
     /**
@@ -104,7 +85,7 @@ class QuizController extends Controller
      */
     public function destroy($id)
     {
-        Quiz::findOrFail($id)->delete();
-        return response(['message' => 'Deleted Successfully'], 200);
+        //
     }
+    
 }

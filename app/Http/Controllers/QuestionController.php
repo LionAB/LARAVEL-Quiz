@@ -64,7 +64,7 @@ class QuestionController extends Controller
     {
         //
     }
-
+    
     /**
      * Update the specified resource in storage.
      *
@@ -89,5 +89,21 @@ class QuestionController extends Controller
     {
         Question::findOrFail($id)->delete();
         return response(['message' => 'Deleted Successfully'], 200);
+    }
+    public function question_list($quiz_id)
+    {
+      
+        $quiz = Quiz ::findOrFail($quiz_id);
+        $question=Question::all();
+        $question->quiz_id=$quiz->id;
+     
+
+
+        
+       
+        
+    
+        return response(['message'=>$question->quiz_id],200);
+
     }
 }

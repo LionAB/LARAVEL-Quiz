@@ -11,6 +11,7 @@ class Choice extends Model
 
     protected $fillable = [
         'label',
+        'question_id'
     ];
 
     public function question()

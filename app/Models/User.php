@@ -24,9 +24,9 @@ class User extends Authenticatable implements JWTSubject
         'password',
     ];
 
-    public function quizzes()
+    public function score()
     {
-        return $this->hasMany(Quiz::class);
+        return $this->hasMany(Score::class);
     }
 
     /**

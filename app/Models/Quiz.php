@@ -10,7 +10,8 @@ class Quiz extends Model
     use HasFactory;
 
     protected $fillable = [
-        'label'
+        'label','published'
+
     ];
 
     public function questions()
@@ -18,8 +19,8 @@ class Quiz extends Model
         return $this->hasMany(Question::class);
     }
 
-    public function user()
+    public function score()
     {
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(Score::class);
     }
 }

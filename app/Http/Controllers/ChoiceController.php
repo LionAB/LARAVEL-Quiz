@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\Quiz;
 use App\Models\Question;
 use App\Models\Choice;
-
+use App\Models\Score;
 use Illuminate\Http\Request;
 
 class ChoiceController extends Controller
@@ -54,6 +54,44 @@ class ChoiceController extends Controller
     {
         return Choice::find($id);
     }
+    public function choice_list($question_id,$choice_id)
+    {
+        $question = Question ::findOrFail($question_id);
+        $choice_list =$question-> choice_list;
+        $choice_list->question_id= $question_id;
+        $choice_list->choice->add(Choice::findOrFail($choice_id));
+        $choice_list->save();
+        return response(200);
+    }
+
+    public function answer_question($question_id,$choice_id,$user_id)
+    {
+        $points = Score::findOrFail($user_id);
+        $question = Question ::findOrFail($question_id);
+        $choice = Choice ::findOrFail($choice_id);
+        $answer=$question->answer;
+        $earning=$question->earning; 
+        $score=$points->score;
+        echo $earning;
+        
+        
+        if ($answer == $choice_id)
+        {
+            $points->increment('score',+$earning);
+        
+            $points->save();
+            return response(['message' => 'Bonne réponse votre score est: '
+                                        .$score], 200);
+            
+        }else{
+        
+            return response(['message' => 'Mauvaise réponse',$score], 200);
+        }
+        
+
+
+    }
+
 
     /**
      * Show the form for editing the specified resource.

@@ -40,22 +40,23 @@ Route::apiResource('/users', UserController::class);
 
 //Quiz routes
 Route::get('/quizzes' , [QuizController::class]);
-Route::post('/quizzes' , [QuizController::class]);
+Route::post('/quizzes', [QuizController::class,]);
+Route::post('users/{user_id}/quizzes/{quiz_id}', [QuizController::class,'choose_quiz']);
 Route::delete('/quizzes/{id}' , [QuizController::class]);
 
 Route::apiResource('/quizzes', QuizController::class);
 
 
 //Question routes
-Route::get('/questions' , [QuestionController::class]);
+Route::get('/{quiz_id}/questions' , [QuestionController::class,'question_list']);
 Route::post('/questions' , [QuestionController::class]);
 Route::delete('/questions/{id}' , [QuestionController::class]);
 
 Route::apiResource('/questions' , QuestionController::class);
 
 //Choice routes
-Route::get('/choices' , [ChoiceController::class]);
-Route::post('/choices' , [ChoiceController::class]);
+Route::get('/choices' , [ChoiceController::class,'choice_list']);
+Route::post('/users/{user_id}/questions/{question_id}/choices/{choice_id}' , [ChoiceController::class,'answer_question']);
 Route::delete('/choices/{id}' , [ChoiceController::class]);
 
 Route::apiResource('/choices' , ChoiceController::class);

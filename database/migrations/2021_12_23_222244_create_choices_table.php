@@ -16,7 +16,7 @@ class CreateChoicesTable extends Migration
         Schema::create('choices', function (Blueprint $table) {
             $table->id();
             $table->string('label');
-            $table->foreignId('question_id')->constrained();
+            $table->unsignedBigInteger('question_id')->nullable();
             $table->timestamps();
         });
     }
