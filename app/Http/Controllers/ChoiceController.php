@@ -59,39 +59,9 @@ class ChoiceController extends Controller
 
         $choice = Choice::where('question_id',$question_id)->get();
 
-        return response(['choix'=>$choice],200);
+        return $choice->toArray();
     }
 
-    public function answer_question($user_id,$question_id,$choice_id)
-    {
-        $points = Score::find($user_id);
-        $question = Question ::findOrFail($question_id);
-        //$choice = Choice ::findOrFail($choice_id);
-        $answer=$question->answer;
-        $earning=$question->earning; 
-        $score=$points->score;
-        
-        
-        
-        if ($answer == $choice_id)
-        {
-    
-           $points->increment('score',$earning);
-          
-            $points->save();
-            return response(['message' => 'Bonne réponse votre score est: '
-                                        .$points->score], 200);
-                                        echo $points;
-            
-        }else{
-        
-            
-            return response(['message' => 'Mauvaise réponse',$score], 200);
-        }
-        
-        $points->save();
-
-    }
 
 
     /**

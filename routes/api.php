@@ -36,20 +36,20 @@ Route::group([
 
 //User routes
 Route::get('/users' , [UserController::class]);
-Route::get('/user/{id}',[UserController::class,'profile']);
+Route::get('/user/{id}',[UserController::class,'getUser']);
 Route::post('/users' , [UserController::class]);
 Route::delete('/users/{id}' , [UserController::class]);
 
-Route::apiResource('/users', UserController::class);
+Route::apiResource('/user', UserController::class);
 
 //Quiz routes
 Route::get('/quiz' , [QuizController::class]);
 
-Route::post('/quiz', [QuizController::class,]);
+Route::post('/quiz',[QuizController::class,'AddQuiz']);
 Route::post('/quiz/{quiz_id}/publish', [QuizController::class,'publish']);
 Route::post('/quiz/{quiz_id}/unpublish', [QuizController::class,'unpublish']);
 
-Route::put('/quiz/{quiz_id}',[QuizController::class,]);
+Route::put('/quiz/{quiz_id}',[QuizController::class,'editQuiz']);
 Route::post('users/{user_id}/quiz/{quiz_id}', [QuizController::class,'choose_quiz']);
 Route::delete('/quiz/{quiz_id}', [QuizController::class,'delete']);
 
@@ -65,11 +65,13 @@ Route::apiResource('/questions' , QuestionController::class);
 
 //Choice routes
 Route::get('/question/{question_id}/choices' , [ChoiceController::class,'choice_list']);
-Route::post('/users/{user_id}/questions/{question_id}/choices/{choice_id}' , [ChoiceController::class,'answer_question']);
 Route::delete('/choices/{id}' , [ChoiceController::class]);
 
 Route::apiResource('/choices' , ChoiceController::class);
 
 //Score routes
-Route::get('/scores',[ScoreController::class]);
-Route::apiResource('/scores' , ScoreController::class);
+Route::get('/score',[ScoreController::class]);
+Route::post('/score',[ScoreController::class]);
+Route::post('/users/{user_id}/questions/{question_id}/choices/{choice_id}' , [ScoreController::class,'answer_question']);
+
+Route::apiResource('/score' , ScoreController::class);

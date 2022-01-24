@@ -17,7 +17,7 @@ class CreateQuestionsTable extends Migration
             $table->id();
             $table->integer('answer');
             $table->string('label');
-            $table->integer('earning')->nullable();
+            $table->integer('earnings')->nullable();
             $table->unsignedBigInteger('quiz_id')->nullable();
             $table->timestamps();
         });

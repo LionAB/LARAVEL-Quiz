@@ -31,9 +31,12 @@ class UserController extends Controller
         
     }
   
-    public function profile($id){
-        $user= User::where('id',$id)->get();
-        return response(['utilisateur'=>$user],200);
+    public function userProfile() {
+        return response()->json(auth()->user());
+    }
+    public function getUser($id){
+        $user= User::find($id);
+        return $user;
     }
 
 

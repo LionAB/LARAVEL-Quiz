@@ -12,7 +12,7 @@ class Question extends Model
     protected $fillable = [
         'label',
         'answer',
-        'earning',
+        'earnings',
         'quiz_id'
     ];
 

@@ -9,6 +9,7 @@ use App\Models\Choice;
 use App\Models\Score;
 
 use Illuminate\Http\Request;
+use SebastianBergmann\Environment\Console;
 
 class QuizController extends Controller
 {
@@ -43,7 +44,7 @@ class QuizController extends Controller
         
         $score->save(); 
         
-        return response(['message'=>$score],200);
+        return $score->toArray();
     }
 
 
@@ -60,6 +61,35 @@ class QuizController extends Controller
         return response()->json($quiz, 201);
     }
 
+    public function AddQuiz(Request $request){
+
+        $quiz = Quiz::create($request->all());
+
+
+        $Quiz = new Quiz();
+        $Quiz->id=$quiz->id;
+        $Quiz->label=$quiz->label;
+        $Quiz->published=$quiz->published;
+
+        $Question = new Question();
+        $Question->id=$quiz->questions->id;
+        $Question->label=$quiz->questions->label;
+        $Question->answer=$quiz->questions->answer;
+        $Question->earnings=$quiz->questions->earnings;
+        $Question->quiz_id=$quiz->id;
+
+        $Choice = new Choice();
+        $Choice->id=$quiz->question->choices->id;
+        $Choice->label=$quiz->question->choices->label;
+        $Choice->question_id=$quiz->question->id;
+
+        $Quiz->save();
+        $Question->save();
+        $Choice->save();
+
+        return response(200);
+
+    }
     /**
      * Display the specified resource.
      *
@@ -89,9 +119,8 @@ class QuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $quiz_id)
+    public function editQuiz(Request $request, $quiz_id)
     {
-
         $quiz = Quiz::findOrFail($quiz_id);
         $quiz->update($request->all());
         return response()->json($quiz, 200);

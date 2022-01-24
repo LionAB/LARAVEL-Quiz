@@ -76,7 +76,7 @@ class QuestionController extends Controller
     {
         $question = Question::findOrFail($id);
         $question->update($request->all());
-        return response()->json($question, 200);
+        return $question->toArray();
     }
 
     /**
@@ -93,7 +93,7 @@ class QuestionController extends Controller
     public function question_list($quiz_id)
     {
         $question= Question::where('quiz_id',$quiz_id)->get();
-        return response(['questions'=>$question],200);
+        return $question->toArray();
 
     }
 }

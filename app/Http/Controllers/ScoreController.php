@@ -88,5 +88,36 @@ class ScoreController extends Controller
     {
         //
     }
+
+
+    public function answer_question($user_id,$question_id,$choice_id)
+    {
+        $points = Score::find($user_id);
+        $question = Question ::findOrFail($question_id);
+        //$choice = Choice ::findOrFail($choice_id);
+        $answer=$question->answer;
+        $earnings=$question->earnings; 
+        
+        
+        
+        
+        if ($answer == $choice_id)
+        {
+    
+           $points->increment('score',$earnings);
+          
+            $points->save();
+            return $points->toArray();
+            
+        }else{
+        
+             $points->save();
+             return $points->toArray();
+        }
+        
+       
+        
+
+    }
     
 }
